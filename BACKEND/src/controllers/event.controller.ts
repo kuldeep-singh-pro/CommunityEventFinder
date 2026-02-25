@@ -3,11 +3,11 @@ import Event from "../models/event.model";
 
 export const createEvent = async (req: Request, res: Response) => {
   try {
-    const { title,discription, email, date, state, city, street, pincode } = req.body;
+    const { title, description, email, date, state, city, street, pincode } = req.body;
 
     const newEvent = await Event.create({
       title,
-      discription,
+      description,
       email,
       date,
       location: { state, city, street, pincode }
