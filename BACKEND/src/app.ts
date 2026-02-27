@@ -3,7 +3,7 @@ import cors from "cors";
 import eventRouter from "./routes/event.routes";
 import "./models/user.model";
 import { errorMiddleware } from "./middleware/error.middleware";
-
+import dashboardRouter from "./routes/dashboard.routes";
 
 const app = express();
 
@@ -14,6 +14,6 @@ app.use(express.json());
 app.use(errorMiddleware);
 
 app.use("/api", eventRouter);
-
+app.use("/api", dashboardRouter);
 
 export default app;
