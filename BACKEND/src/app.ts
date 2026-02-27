@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(errorMiddleware);
 
-app.use("/api", eventRouter);
-app.use("/api", dashboardRouter);
+app.use("/api/events", eventRouter);
+app.use("/api/dashboard", dashboardRouter);
 
 export default app;

@@ -1,4 +1,4 @@
-import Express from "express";
+import express from "express";
 import {
   createEvent,
   joinEvent,
@@ -9,14 +9,20 @@ import {
   closeEvent,
 } from "../controllers/event.controller";
 
-const eventRouter = Express.Router();
+const eventRouter = express.Router();
 
-eventRouter.post("/createEvent", createEvent);
-eventRouter.post("/join", joinEvent);
-eventRouter.get("/events", getEvent);
-eventRouter.get("/events/popular", getPopularEvents);
-eventRouter.put("/events/:eventId", updateEvent);
-eventRouter.patch("/events/:eventId/close", closeEvent);
-eventRouter.delete("/events/:eventId", deleteEvent);
+eventRouter.post("/", createEvent);
+
+eventRouter.get("/", getEvent);
+
+eventRouter.get("/popular", getPopularEvents);
+
+eventRouter.post("/:eventId/join", joinEvent);
+
+eventRouter.put("/:eventId", updateEvent);
+
+eventRouter.patch("/:eventId/close", closeEvent);
+
+eventRouter.delete("/:eventId", deleteEvent);
 
 export default eventRouter;
