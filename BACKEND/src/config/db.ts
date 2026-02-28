@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
+import { env } from "../config/env";
 
 const connectDB = async () => {
   try {
     console.log("Connecting to MongoDB...");
 
-    await mongoose.connect(process.env.MONGO_URI as string, {
+    await mongoose.connect(env.MONGO_URI, {
       family: 4 
     });
 

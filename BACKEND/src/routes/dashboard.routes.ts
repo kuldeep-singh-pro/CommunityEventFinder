@@ -4,6 +4,6 @@ import { getDashboard } from "../controllers/dashboard.controller";
 
 const dashboardRouter = Express.Router();
 
-dashboardRouter.get("/events/dashboard", getDashboard);
+dashboardRouter.get("/", getDashboard);
 
 export default dashboardRouter;
