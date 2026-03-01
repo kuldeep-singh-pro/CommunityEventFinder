@@ -8,34 +8,18 @@ import {
   deleteEvent,
   closeEvent,
 } from "../controllers/event.controller";
-
+import { validate } from "../middleware/validate.middleware";
+import { createEventSchema } from "../dto/event.dto";
 import { protect } from "../middleware/auth.middleware";
-import { authorize } from "../middleware/role.middleware";
 
-const eventRouter = express.Router();
+const router = express.Router();
 
-eventRouter.get("/", getEvent);
+router.post("/", protect, validate(createEventSchema), createEvent);
+router.get("/", getEvent);
+router.get("/popular", getPopularEvents);
+router.post("/:eventId/join", protect, joinEvent);
+router.put("/:eventId", protect, updateEvent);
+router.patch("/:eventId/close", protect, closeEvent);
+router.delete("/:eventId", protect, deleteEvent);
 
-eventRouter.get("/popular", getPopularEvents);
-
-eventRouter.post("/", protect, authorize("organizer"), createEvent);
-
-eventRouter.post(
-  "/:eventId/join",
-  protect,
-  authorize("participant"),
-  joinEvent,
-);
-
-eventRouter.put("/:eventId", protect, authorize("organizer"), updateEvent);
-
-eventRouter.patch(
-  "/:eventId/close",
-  protect,
-  authorize("organizer"),
-  closeEvent,
-);
-
-eventRouter.delete("/:eventId", protect, authorize("organizer"), deleteEvent);
-
-export default eventRouter;
+export default router;

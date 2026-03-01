@@ -7,7 +7,7 @@ export interface IUser extends Document {
   role: "organizer" | "participant";
 }
 
-const userSchema = new Schema<IUser>(
+const userSchema = new Schema<  IUser>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -18,7 +18,7 @@ const userSchema = new Schema<IUser>(
       default: "participant",
     },
   },
-  { timestamps: true },
+  { timestamps: true }, 
 );
 
 export default mongoose.model<IUser>("User", userSchema);
