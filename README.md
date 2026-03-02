@@ -35,9 +35,6 @@ Community Event Finder allows users to:
 
 ### Frontend
 (Coming Soon)
-- React
-- TypeScript
-- Tailwind CSS
 
 ---
 
