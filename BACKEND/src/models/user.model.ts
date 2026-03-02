@@ -5,20 +5,41 @@ export interface IUser extends Document {
   email: string;
   password: string;
   role: "organizer" | "participant";
+  isVerified: boolean;
+  verificationCode?: string;
+  verificationCodeExpire?: Date;
 }
 
-const userSchema = new Schema<  IUser>(
+const userSchema = new Schema<IUser>(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
     role: {
       type: String,
       enum: ["organizer", "participant"],
       default: "participant",
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationCode: String,
+    verificationCodeExpire: Date,
   },
-  { timestamps: true }, 
+  { timestamps: true },
 );
 
 export default mongoose.model<IUser>("User", userSchema);

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Event from "../models/event.model";
 import { NotFound, BadRequest, Forbidden } from "../ERRORHANDLER/httpError";
 
@@ -8,10 +9,7 @@ export const createEventService = async (data: any, userId: string) => {
   });
 };
 
-export const joinEventService = async (
-  eventId: string,
-  userId: string
-) => {
+export const joinEventService = async (eventId: string, userId: string) => {
   const event = await Event.findById(eventId);
 
   if (!event) {
@@ -22,11 +20,17 @@ export const joinEventService = async (
     throw new BadRequest("Event is closed");
   }
 
-  if (event.participants.includes(userId as any)) {
+  const userObjectId = new mongoose.Types.ObjectId(userId);
+
+  const alreadyJoined = event.participants.some(
+    (participant) => participant.toString() === userObjectId.toString(),
+  );
+
+  if (alreadyJoined) {
     throw new BadRequest("Already joined");
   }
 
-  event.participants.push(userId as any);
+  event.participants.push(userObjectId);
   await event.save();
 
   return event;
@@ -35,7 +39,7 @@ export const joinEventService = async (
 export const updateEventService = async (
   eventId: string,
   userId: string,
-  body: any
+  body: any,
 ) => {
   const event = await Event.findById(eventId);
 
@@ -53,10 +57,7 @@ export const updateEventService = async (
   return event;
 };
 
-export const closeEventService = async (
-  eventId: string,
-  userId: string
-) => {
+export const closeEventService = async (eventId: string, userId: string) => {
   const event = await Event.findById(eventId);
 
   if (!event) {
@@ -73,10 +74,7 @@ export const closeEventService = async (
   return event;
 };
 
-export const deleteEventService = async (
-  eventId: string,
-  userId: string
-) => {
+export const deleteEventService = async (eventId: string, userId: string) => {
   const event = await Event.findById(eventId);
 
   if (!event) {
@@ -90,15 +88,31 @@ export const deleteEventService = async (
   await event.deleteOne();
 };
 
-export const getEventsService = async (
-  city: any,
-  type: any,
-  sort: any
-) => {
-  let filter: Record<string, unknown> = {};
+interface GetEventsParams {
+  city?: string;
+  type?: string;
+  sort?: string;
+  search?: string;
+  page: number;
+  limit: number;
+}
+
+export const getEventsService = async ({
+  city,
+  type,
+  sort,
+  search,
+  page,
+  limit,
+}: GetEventsParams) => {
+  const filter: any = {};
 
   if (city) {
     filter["location.city"] = city;
+  }
+
+  if (search) {
+    filter.title = { $regex: search, $options: "i" };
   }
 
   const today = new Date();
@@ -116,8 +130,10 @@ export const getEventsService = async (
 
   await Event.updateMany(
     { date: { $lt: today }, status: "open" },
-    { $set: { status: "closed" } }
+    { $set: { status: "closed" } },
   );
+
+  const skip = (page - 1) * limit;
 
   let query = Event.find(filter)
     .populate("createdBy", "name email role")
@@ -131,7 +147,18 @@ export const getEventsService = async (
     query = query.sort({ date: 1 });
   }
 
-  return query;
+  const total = await Event.countDocuments(filter);
+
+  const events = await query.skip(skip).limit(limit);
+
+  return {
+    page,
+    limit,
+    total,
+    totalPages: Math.ceil(total / limit),
+    count: events.length,
+    events,
+  };
 };
 
 export const fetchPopularEvents = async (limit = 10) => {
@@ -145,4 +172,21 @@ export const fetchPopularEvents = async (limit = 10) => {
     { $sort: { participantsCount: -1 } },
     { $limit: limit },
   ]);
+};
+
+export const getCalendarEventsService = async (month: number, year: number) => {
+  if (!month || !year) {
+    throw new BadRequest("Month and year are required");
+  }
+
+  const start = new Date(year, month - 1, 1);
+  const end = new Date(year, month, 0, 23, 59, 59);
+
+  const events = await Event.find({
+    date: { $gte: start, $lte: end },
+  })
+    .select("title date location status")
+    .sort({ date: 1 });
+
+  return events;
 };

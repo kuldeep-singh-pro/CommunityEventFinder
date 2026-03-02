@@ -8,8 +8,7 @@ export const validate =
     const result = schema.safeParse(req.body);
 
     if (!result.success) {
-      const message =
-        result.error.issues[0]?.message || "Validation error";
+      const message = result.error.issues[0]?.message || "Validation error";
       throw new BadRequest(message);
     }
 

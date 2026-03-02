@@ -2,8 +2,8 @@ import Express from "express";
 
 import { getDashboard } from "../controllers/dashboard.controller";
 
-const dashboardRouter = Express.Router();
+const router = Express.Router();
 
-dashboardRouter.get("/", getDashboard);
+router.get("/", getDashboard);
 
-export default dashboardRouter;
+export default router;

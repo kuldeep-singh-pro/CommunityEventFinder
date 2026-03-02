@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -13,16 +13,16 @@ interface Env {
 
 function getEnv(): Env {
   const {
-    PORT = '5000',
+    PORT = "5000",
     MONGO_URI,
     JWT_SECRET,
-    JWT_EXPIRE = '1d',
+    JWT_EXPIRE = "1d",
     EMAIL_USER,
     EMAIL_PASS,
   } = process.env;
 
-  if (!MONGO_URI) throw new Error('MONGO_URI is required');
-  if (!JWT_SECRET) throw new Error('JWT_SECRET is required');
+  if (!MONGO_URI) throw new Error("MONGO_URI is required");
+  if (!JWT_SECRET) throw new Error("JWT_SECRET is required");
 
   return {
     PORT: Number(PORT),

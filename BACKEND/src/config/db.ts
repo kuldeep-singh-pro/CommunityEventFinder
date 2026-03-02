@@ -6,7 +6,7 @@ const connectDB = async () => {
     console.log("Connecting to MongoDB...");
 
     await mongoose.connect(env.MONGO_URI, {
-      family: 4 
+      family: 4,
     });
 
     console.log("MongoDB Connected Successfully");

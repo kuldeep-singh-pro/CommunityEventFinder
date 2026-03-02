@@ -10,7 +10,7 @@ export const getDashboard = asyncHandler(
     return successResponse(
       res,
       "Dashboard details fetched successfully",
-      stats
+      stats,
     );
-  }
+  },
 );
