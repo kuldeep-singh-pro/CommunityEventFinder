@@ -9,20 +9,33 @@ import {
   closeEvent,
 } from "../controllers/event.controller";
 
-const eventRouter = express.Router();
+import { protect } from "../middleware/auth.middleware";
+import { authorize } from "../middleware/role.middleware";
 
-eventRouter.post("/", createEvent);
+const eventRouter = express.Router();
 
 eventRouter.get("/", getEvent);
 
 eventRouter.get("/popular", getPopularEvents);
 
-eventRouter.post("/:eventId/join", joinEvent);
+eventRouter.post("/", protect, authorize("organizer"), createEvent);
 
-eventRouter.put("/:eventId", updateEvent);
+eventRouter.post(
+  "/:eventId/join",
+  protect,
+  authorize("participant"),
+  joinEvent,
+);
 
-eventRouter.patch("/:eventId/close", closeEvent);
+eventRouter.put("/:eventId", protect, authorize("organizer"), updateEvent);
 
-eventRouter.delete("/:eventId", deleteEvent);
+eventRouter.patch(
+  "/:eventId/close",
+  protect,
+  authorize("organizer"),
+  closeEvent,
+);
+
+eventRouter.delete("/:eventId", protect, authorize("organizer"), deleteEvent);
 
 export default eventRouter;

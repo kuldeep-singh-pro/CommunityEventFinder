@@ -1,5 +1,3 @@
-
-
 export class HttpError extends Error {
   public statusCode: number;
   public isOperational: boolean;
@@ -13,7 +11,6 @@ export class HttpError extends Error {
     Error.captureStackTrace(this);
   }
 }
-
 
 export class ClientError extends HttpError {
   constructor(message: string, statusCode: number) {
@@ -51,9 +48,6 @@ export class Conflict extends ClientError {
   }
 }
 
-
-
-
 export class ServerError extends HttpError {
   constructor(message: string, statusCode: number) {
     super(message, statusCode);
@@ -65,4 +59,3 @@ export class InternalServerError extends ServerError {
     super(message, 500);
   }
 }
-
