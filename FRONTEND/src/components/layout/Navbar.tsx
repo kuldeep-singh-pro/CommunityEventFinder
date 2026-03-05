@@ -4,9 +4,9 @@ import { Button } from "../ui/button"
 
 export default function Navbar() {
   return (
-    <header className="border-b bg-background">
+    <header className="border-b bg-background sticky top-0 z-50">
       
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:py-4 lg:px-8 gap-2">
 
         <Logo />
 
@@ -16,13 +16,13 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <Link to="/login">
-            <Button variant="ghost">Log In</Button>
+            <Button variant="ghost" size="sm" className="text-xs sm:text-sm">Log In</Button>
           </Link>
 
           <Link to="/register">
-            <Button>Sign Up</Button>
+            <Button size="sm" className="text-xs sm:text-sm">Sign Up</Button>
           </Link>
         </div>
 

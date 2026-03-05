@@ -23,11 +23,15 @@ export const joinEventService = async (eventId: string, userId: string) => {
   const userObjectId = new mongoose.Types.ObjectId(userId);
 
   const alreadyJoined = event.participants.some(
-    (participant) => participant.toString() === userObjectId.toString(),
+    (participant) => participant.toString() === userObjectId.toString()
   );
 
   if (alreadyJoined) {
     throw new BadRequest("Already joined");
+  }
+
+  if (event.maxParticipants && event.participants.length >= event.maxParticipants) {
+    throw new BadRequest("Event is full");
   }
 
   event.participants.push(userObjectId);
@@ -39,7 +43,7 @@ export const joinEventService = async (eventId: string, userId: string) => {
 export const updateEventService = async (
   eventId: string,
   userId: string,
-  body: any,
+  body: any
 ) => {
   const event = await Event.findById(eventId);
 
@@ -47,7 +51,7 @@ export const updateEventService = async (
     throw new NotFound("Event not found");
   }
 
-  if (event.createdBy.toString() !== userId.toString()) {
+  if (!event.createdBy || event.createdBy.toString() !== userId.toString()) {
     throw new Forbidden("You are not allowed to update this event");
   }
 
@@ -64,7 +68,7 @@ export const closeEventService = async (eventId: string, userId: string) => {
     throw new NotFound("Event not found");
   }
 
-  if (event.createdBy.toString() !== userId.toString()) {
+  if (!event.createdBy || event.createdBy.toString() !== userId.toString()) {
     throw new Forbidden("You are not allowed to close this event");
   }
 
@@ -81,7 +85,7 @@ export const deleteEventService = async (eventId: string, userId: string) => {
     throw new NotFound("Event not found");
   }
 
-  if (event.createdBy.toString() !== userId.toString()) {
+  if (!event.createdBy || event.createdBy.toString() !== userId.toString()) {
     throw new Forbidden("You are not allowed to delete this event");
   }
 
@@ -112,7 +116,7 @@ export const getEventsService = async ({
   }
 
   if (search) {
-    filter.title = { $regex: search, $options: "i" };
+    filter.$text = { $search: search };
   }
 
   const today = new Date();
@@ -130,7 +134,7 @@ export const getEventsService = async ({
 
   await Event.updateMany(
     { date: { $lt: today }, status: "open" },
-    { $set: { status: "closed" } },
+    { $set: { status: "closed" } }
   );
 
   const skip = (page - 1) * limit;

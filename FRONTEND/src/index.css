@@ -18,7 +18,16 @@
     --muted-foreground: 215 16% 47%;
   }
 
+  html, body, #root {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  select, input, textarea, button {
+    @apply max-w-full;
   }
 }

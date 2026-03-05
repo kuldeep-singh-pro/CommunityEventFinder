@@ -3,7 +3,7 @@ import Footer from "../../components/layout/Footer"
 
 import HeroSection from "./HeroSection"
 import FeaturesSection from "./FeaturesSection"
-import StatsSection from "./ StatsSection"
+import StatsSection from "./StatsSection"
 import CTASection from "./CTASection"
 
 export default function Landing() {

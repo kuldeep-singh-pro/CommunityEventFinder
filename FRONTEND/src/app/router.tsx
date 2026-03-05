@@ -7,29 +7,34 @@ import EventDetails from "../pages/Events/EventDetails"
 import Dashboard from "../pages/Dashboard/Dashboard"
 import CalendarView from "../pages/Calendar/CalendarView"
 import ProtectedRoute from "../components/layout/ProtectedRoute"
+import MainLayout from "../components/layout/MainLayout"
 
 export const router = createBrowserRouter([
   { path: "/", element: <Landing /> },
-  { path: "/login", element: <Login /> },
-  { path: "/register", element: <Register /> },
-  { path: "/events", element: <EventList /> },
-  { path: "/events/:id", element: <EventDetails /> },
+  { path: "/login", element: <MainLayout><Login /></MainLayout> },
+  { path: "/register", element: <MainLayout><Register /></MainLayout> },
+  { path: "/events", element: <MainLayout><EventList /></MainLayout> },
+  { path: "/events/:id", element: <MainLayout><EventDetails /></MainLayout> },
 
   {
     path: "/dashboard",
     element: (
-      <ProtectedRoute>
-        <Dashboard />
-      </ProtectedRoute>
+      <MainLayout>
+        <ProtectedRoute>
+          <Dashboard />
+        </ProtectedRoute>
+      </MainLayout>
     ),
   },
 
   {
     path: "/calendar",
     element: (
-      <ProtectedRoute>
-        <CalendarView />
-      </ProtectedRoute>
+      <MainLayout>
+        <ProtectedRoute>
+          <CalendarView />
+        </ProtectedRoute>
+      </MainLayout>
     ),
   },
 ])
