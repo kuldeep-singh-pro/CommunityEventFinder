@@ -63,7 +63,9 @@ export default function VerificationCard({ email }: any) {
               <input
                 key={i}
                 maxLength={1}
-                ref={(el) => (inputs.current[i] = el)}
+                ref={(el) => {
+                  inputs.current[i] = el;
+                }}
                 onChange={(e) => handleChange(e.target.value, i)}
                 className="w-11 h-11 text-center text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
               />

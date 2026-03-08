@@ -27,7 +27,6 @@ export default function EventList() {
         page,
         limit: 6,
       }),
-    keepPreviousData: true,
   });
 
   if (isLoading) {
