@@ -22,7 +22,7 @@ export const sendEmail = async ({
     });
 
     const info = await transporter.sendMail({
-      from: `"Community Event Finder" <${env.EMAIL_USER}>`,
+      from: `"Community Event Finder" <kuldeepsinghwebdev@gmail.com>`,
       to,
       subject,
       text,
