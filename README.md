@@ -1,156 +1,266 @@
+
 # Community Event Finder
 
-A full-stack web application for discovering, creating, and managing community events.
+Community Event Finder is a full-stack web application that allows users to discover, create, and manage community events. The platform supports two types of users: participants who can explore and join events, and organizers who can create events and manage attendees.
 
-This project is built with a secure and scalable backend architecture using modern technologies and follows a clean modular structure. Frontend implementation will be added next.
-
----
-
-## 🚀 Project Overview
-
-Community Event Finder allows users to:
-
-- Register and verify email using OTP
-- Login securely with JWT authentication
-- Browse community events
-- Search and filter events
-- Join (RSVP) events
-- Organizers can create, update, close, and delete events
-- View event analytics through a dashboard
-- View events in a calendar format
+This project demonstrates full-stack development using modern technologies and follows a scalable and modular backend architecture with a responsive frontend user interface.
 
 ---
 
-## 🛠 Tech Stack
+## Live Demo
 
-### Backend
-- Node.js
-- Express.js
-- TypeScript
-- MongoDB (Mongoose)
-- JWT Authentication
-- OTP Email Verification (Nodemailer)
-- Zod for DTO validation
-- Modular Service-Based Architecture
+Frontend: (deployed frontend link here soon...)  
+Backend API: ( deployed backend link here soon...)
+
+---
+
+## Project Overview
+
+Community Event Finder enables users to easily participate in local community activities while providing organizers with tools to manage and monitor their events efficiently.
+
+Participants can browse available events, request to join them, and track their participation status. Organizers can create and manage events, approve or reject join requests, and monitor event statistics through a dashboard.
+
+The platform includes authentication, role-based authorization, an RSVP approval system, and a calendar-based event viewer.
+
+---
+
+## Key Features
+
+### Authentication System
+User registration and login with JWT-based authentication.  
+Email verification using OTP codes sent through email.  
+Role-based access control for organizers and participants.  
+Protected routes for authenticated actions.
+
+### Event Management
+Organizers can create, update, close, and delete events.  
+Ownership validation ensures only event creators can modify their events.  
+Events support location details, participant limits, and scheduling.  
+Past events cannot be created or modified.
+
+### Participation System
+Participants can send join requests to events.  
+Organizers can approve or reject participant requests.  
+Users can track their request status (pending or approved).  
+Participants cannot join the same event multiple times.
+
+### Dashboard and Activity
+Organizers have a dashboard that shows event statistics including total events, open events, and closed events.  
+Both organizers and participants can view their activity through a unified **My Activity** page.
+
+### Calendar View
+Users can visualize events in a calendar format and navigate between months to see upcoming or scheduled events.
+
+### User Interface
+Responsive design optimized for desktop and mobile devices.  
+Role-based navigation that changes depending on user permissions.  
+Interactive event cards and clean UI components.
+
+---
+
+## Technology Stack
 
 ### Frontend
-(Coming Soon)
+React.js  
+TypeScript  
+Tailwind CSS  
+React Router  
+TanStack React Query  
+Lucide Icons
+
+### Backend
+Node.js  
+Express.js  
+TypeScript  
+MongoDB  
+Mongoose  
+JWT Authentication  
+Nodemailer for email verification  
+Zod for DTO validation
 
 ---
 
-## 🔐 Authentication & Authorization
+## Backend Architecture
 
-- User Registration
-- OTP Email Verification (6-digit code)
-- JWT-based Login
-- Role-based Access Control (Organizer / Participant)
-- Protected Routes Middleware
-- Ownership validation for event updates and deletion
-
----
-
-## 📅 Event Management Features
-
-- Create Event (Organizer only)
-- Update Event (Owner only)
-- Close Event (Owner only)
-- Delete Event (Owner only)
-- Join Event (RSVP system)
-- Auto-close past events
-- Search events by title
-- Filter events by city
-- Filter events by type (today / upcoming)
-- Sorting (latest / by date)
-- Pagination support
-- Popular events using aggregation
-- Calendar API (month & year based filtering)
-- map  support ()
-
----
-
-## 📊 Dashboard Features
-
-Organizer dashboard provides:
-
-- Total events
-- Open events
-- Closed events
-- Total participants
-- Popular events ranking
-
----
-
-## 🏗 Backend Architecture
-
-The backend follows a modular layered architecture:
+The backend follows a modular layered architecture that separates responsibilities for maintainability and scalability.
 
 Controller → Service → Model
 
-Additional Layers:
+Additional layers include DTO validation using Zod, centralized error handling, authentication middleware, role-based authorization, and utility helper functions.
 
-- DTO Validation Layer (Zod)
-- Centralized Error Handling
-- JWT Authentication Middleware
-- Role-Based Middleware
-- Clean Separation of Concerns
+This structure ensures that business logic is separated from routing logic and database operations.
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
+CommunityEventFinder
 
-Community/
-│
-├── BACKEND/
-│ ├── src/
-│ │ ├── config/
-│ │ ├── controllers/
-│ │ ├── services/
-│ │ ├── models/
-│ │ ├── routes/
-│ │ ├── middleware/
-│ │ ├── dto/
-│ │ ├── utils/
-│ │ ├── ERRORHANDLER/
-│ │ └── types/
-│ └── package.json
-│
-├── FRONTEND/ (Coming Soon)
-│
-└── README.md
+BACKEND  
+└── src  
+    ├── config  
+    ├── controllers  
+    ├── services  
+    ├── models  
+    ├── routes  
+    ├── middleware  
+    ├── dto  
+    ├── utils  
+    ├── ERRORHANDLER  
+    └── types  
 
+FRONTEND  
+└── src  
+    ├── components  
+    ├── pages  
+    ├── services  
+    ├── hooks  
+    ├── router  
+    └── layouts  
+
+README.md
 
 ---
 
-## ⚙️ Backend Setup Instructions
+## Backend Setup
 
-Navigate to backend folder:
+Navigate to the backend folder
 
-```bash
 cd BACKEND
 
-Install dependencies:
+Install dependencies
 
 npm install
 
-Create a .env file inside BACKEND folder.
+Create a `.env` file inside the BACKEND folder with the following variables
 
-Run development server:
+PORT=5000  
+MONGO_URI=your_mongodb_connection_string  
+JWT_SECRET=your_secret_key  
+JWT_EXPIRE=7d  
 
-npx ts-node-dev src/index.ts
+EMAIL_USER=your_email_address  
+EMAIL_PASS=your_email_app_password  
 
-Server runs at:
+Run the development server
+
+npm run dev
+
+Backend server runs at
 
 http://localhost:5000
-🔑 Environment Variables
 
-Create a .env file inside the BACKEND directory:
+API Base URL
 
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-JWT_EXPIRE=7d
-EMAIL_USER=your_email_address
-EMAIL_PASS=your_email_app_password
-📌 API Base URL
 http://localhost:5000/api
+
+---
+
+## Frontend Setup
+
+Navigate to the frontend folder
+
+cd FRONTEND
+
+Install dependencies
+
+npm install
+
+Create a `.env` file
+
+VITE_API_URL=http://localhost:5000
+
+Start the development server
+
+npm run dev
+
+Frontend runs at
+
+http://localhost:5173
+
+---
+
+## API Endpoints
+
+Authentication
+
+POST /auth/register  
+POST /auth/login  
+POST /auth/verify-email  
+GET /auth/profile  
+
+Events
+
+GET /events  
+GET /events/:id  
+POST /events  
+PUT /events/:id  
+DELETE /events/:id  
+PATCH /events/:id/close  
+
+Participation
+
+POST /events/:id/join  
+PATCH /events/:eventId/approve/:userId  
+PATCH /events/:eventId/reject/:userId  
+GET /events/my-events  
+GET /events/calendar  
+
+---
+
+## Security Features
+
+JWT authentication system  
+Role-based authorization  
+Protected API routes  
+Event ownership validation  
+Duplicate join prevention  
+Email verification for new users  
+
+---
+
+## Screens Included
+
+Landing Page  
+Login and Registration  
+Browse Events  
+Event Details  
+Create Event  
+Edit Event  
+Organizer Dashboard  
+My Activity  
+Calendar View  
+Profile Page  
+
+---
+
+## Future Improvements
+
+Event image support  
+Map integration for event locations  
+Advanced search filters  
+Real-time notifications  
+Event categories and tagging  
+
+---
+
+## Author
+
+Kuldeep Singh  
+
+Software Developer Intern at HelperSetu  
+
+GitHub  
+https://github.com/skepttalk
+
+---
+
+## Repository
+
+https://github.com/skepttalk/CommunityEventFinder
+
+---
+
+## License
+
+This project is created for educational and portfolio purposes.
