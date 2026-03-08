@@ -19,6 +19,7 @@ export default function Navbar() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
+    setOpen(false);
     navigate("/");
   };
 
@@ -35,10 +36,10 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
         <Logo />
 
-        <nav className="hidden md:flex items-center gap-8 text-sm">
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
           <Link
             to="/events"
-            className="text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-indigo-600 transition"
           >
             Browse Events
           </Link>
@@ -47,14 +48,14 @@ export default function Navbar() {
             <>
               <Link
                 to="/calendar"
-                className="text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-indigo-600 transition"
               >
                 Calendar
               </Link>
 
               <Link
                 to="/my-activity"
-                className="text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-indigo-600 transition"
               >
                 My Activity
               </Link>
@@ -64,7 +65,7 @@ export default function Navbar() {
           {user?.role === "organizer" && (
             <Link
               to="/dashboard"
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-indigo-600 transition"
             >
               Dashboard
             </Link>
@@ -73,7 +74,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3">
           <button className="md:hidden" onClick={() => setOpen(true)}>
-            <Menu size={22} />
+            <Menu size={24} />
           </button>
 
           {!user && (
@@ -91,7 +92,7 @@ export default function Navbar() {
           {user && (
             <>
               <Link to="/profile">
-                <div className="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm font-semibold">
+                <div className="w-9 h-9 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm font-semibold hover:bg-indigo-700 transition">
                   {initials}
                 </div>
               </Link>
@@ -99,7 +100,7 @@ export default function Navbar() {
               <Button
                 variant="outline"
                 onClick={logout}
-                className="hidden md:block"
+                className="hidden md:block hover:text-red-600"
               >
                 Logout
               </Button>
@@ -108,57 +109,68 @@ export default function Navbar() {
         </div>
       </div>
 
-      {open && (
-        <div className="fixed inset-0 z-50 flex justify-end">
-          <div className="flex-1 bg-black/40" onClick={() => setOpen(false)} />
+      <div
+        className={`fixed inset-0 z-50 transition ${
+          open ? "visible" : "invisible"
+        }`}
+      >
+        <div
+          onClick={() => setOpen(false)}
+          className={`absolute inset-0 bg-black/40 transition-opacity ${
+            open ? "opacity-100" : "opacity-0"
+          }`}
+        />
 
-          <div className="w-64 bg-background h-full shadow-lg p-6 space-y-4">
-            <button onClick={() => setOpen(false)}>
-              <X size={22} />
-            </button>
+        <div
+          className={`absolute right-0 top-0 h-full w-64 bg-white shadow-xl p-6 flex flex-col gap-6 text-lg font-medium transform transition-transform duration-300 ${
+            open ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <button onClick={() => setOpen(false)} className="self-end">
+            <X size={24} />
+          </button>
 
-            <Link to="/events" onClick={() => setOpen(false)}>
-              Browse Events
-            </Link>
+          <Link to="/events" onClick={() => setOpen(false)}>
+            Browse Events
+          </Link>
 
-            {user && (
-              <>
-                <Link to="/calendar" onClick={() => setOpen(false)}>
-                  Calendar
-                </Link>
-
-                <Link to="/my-activity" onClick={() => setOpen(false)}>
-                  My Activity
-                </Link>
-              </>
-            )}
-
-            {user?.role === "organizer" && (
-              <Link to="/dashboard" onClick={() => setOpen(false)}>
-                Dashboard
+          {user && (
+            <>
+              <Link to="/calendar" onClick={() => setOpen(false)}>
+                Calendar
               </Link>
-            )}
 
-            {!user && (
-              <>
-                <Link to="/login" onClick={() => setOpen(false)}>
-                  Login
-                </Link>
+              <Link to="/my-activity" onClick={() => setOpen(false)}>
+                My Activity
+              </Link>
+            </>
+          )}
 
-                <Link to="/register" onClick={() => setOpen(false)}>
-                  Sign Up
-                </Link>
-              </>
-            )}
+          {user?.role === "organizer" && (
+            <Link to="/dashboard" onClick={() => setOpen(false)}>
+              Dashboard
+            </Link>
+          )}
 
-            {user && (
-              <button onClick={logout} className="text-red-600">
-                Logout
-              </button>
-            )}
-          </div>
+          {!user && (
+            <>
+              <Link to="/login" onClick={() => setOpen(false)}>
+                Login
+              </Link>
+
+              <Link to="/register" onClick={() => setOpen(false)}>
+                Sign Up
+              </Link>
+            </>
+          )}
+
+          {user && (
+            <button onClick={logout} className="text-red-600 text-left">
+              Logout
+            </button>
+          )}
         </div>
-      )}
+      </div>
     </header>
   );
 }
