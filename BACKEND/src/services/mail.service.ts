@@ -12,7 +12,9 @@ export const sendEmail = async ({
 }) => {
   try {
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
       auth: {
         user: env.EMAIL_USER,
         pass: env.EMAIL_PASS,
@@ -20,7 +22,7 @@ export const sendEmail = async ({
     });
 
     await transporter.sendMail({
-      from: env.EMAIL_USER,
+      from: `"Community Event Finder" <${env.EMAIL_USER}>`,
       to,
       subject,
       text,
