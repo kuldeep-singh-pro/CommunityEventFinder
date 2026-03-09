@@ -9,8 +9,8 @@ This project demonstrates full-stack development using modern technologies and f
 
 ## Live Demo
 
-Frontend: (deployed frontend link here soon...)  
-Backend API: ( deployed backend link here soon...)
+Frontend: (https://community-event-finder.netlify.app/)  
+Backend API: (https://communityeventfinder.onrender.com)
 
 ---
 

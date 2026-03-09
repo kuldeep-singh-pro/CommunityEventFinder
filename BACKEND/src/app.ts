@@ -1,12 +1,14 @@
-import express from "express";
+import  express from "express";
 import cors from "cors";
 import eventRouter from "./routes/event.routes";
 import "./models/user.model";
 import { errorMiddleware } from "./middleware/error.middleware";
 import dashboardRouter from "./routes/dashboard.routes";
 import authRouter from "./routes/auth.routes";
+import helmet from "helmet";
 
 const app = express();
+app.use(helmet());
 
 app.set("json spaces", 2);
 
