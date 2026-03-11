@@ -55,8 +55,10 @@ export default function Navbar() {
             </>
           )}
 
-          {user?.role === "participant" && (
+
+            {user?.role === "participant" && (
             <>
+
               <Link
                 to="/my-activity"
                 className="text-muted-foreground hover:text-indigo-600 transition"

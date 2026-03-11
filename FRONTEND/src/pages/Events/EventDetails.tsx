@@ -112,11 +112,11 @@ export default function EventDetails() {
               <iframe
                 title="map"
                 className="w-full h-64 rounded-md"
-                src={`https://maps.google.com/maps?q=${event.location?.street},${event.location?.city}&z=15&output=embed`}
+                src={`https://maps.google.com/maps?q=${event.location?.street},${event.location?.city},${event.location?.state}&z=15&output=embed`}
               />
 
               <p className="text-sm text-muted-foreground mt-2">
-                {event.location?.street}, {event.location?.city}
+                {event.location?.street}, {event.location?.city},{event.location?.state}
               </p>
             </CardContent>
           </Card>

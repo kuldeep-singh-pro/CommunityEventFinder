@@ -1,14 +1,11 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-
 import {
   getEventById,
   approveParticipant,
   rejectParticipant,
 } from "@/services/event.service";
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 

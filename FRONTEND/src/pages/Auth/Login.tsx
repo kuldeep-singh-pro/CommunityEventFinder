@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import Logo from "@/components/logo/Logo";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -48,10 +49,8 @@ export default function Login() {
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-blue-50 flex flex-col">
       <div className="flex items-center justify-between px-6 py-4 border-b bg-white/70 backdrop-blur">
         <div className="font-semibold text-lg flex items-center gap-2">
-          EventFinder
+         <Logo/>
         </div>
-
-        <div className="text-sm text-muted-foreground">Help Center</div>
       </div>
 
       <div className="flex flex-1 items-center justify-center px-4">

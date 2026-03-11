@@ -21,7 +21,7 @@ import MainLayout from "../components/layout/MainLayout";
 import MyActivity from "@/pages/Activity/MyActivity";
 import ForgotPassword from "@/pages/Auth/ForgotPassword";
 import ResetPassword from "@/pages/Auth/ResetPassword";
-import MangeEvent from "@/pages/Events/manageEvent";
+import MangeEvent from "@/pages/Events/ManageEvent";
 
 export const router = createBrowserRouter([
   {
